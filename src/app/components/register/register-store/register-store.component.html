@@ -1,0 +1,130 @@
+<div class="d-lg-flex half">
+  <div class="bg order-1 order-md-2" style="background-image: url('assets/img/SELLERbg1.jpg');"></div>
+  <div class="contents order-2 order-md-1">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-7">
+          <br>
+          <form (submit)="submit()" [formGroup]="form" >
+            <div *ngIf="!showSecondPart">
+              <h3>Devenir un vendeur à <strong>Beauty Shop</strong></h3>
+              <br>
+              <h5>Des informations <strong>sur vous</strong></h5>
+              <br>
+            <div class="form-group">
+              <label for="firstName" class="form-label">Prénom</label>
+              <input formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName" class="form-label">Nom</label>
+              <input formControlName="lastName" type="text" name="lastName" class="form-control" id="lastName" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input formControlName="email" type="text" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input formControlName="password" type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword" class="form-label">Répéter votre mot de passe</label>
+              <input formControlName="confirmPassword" type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="address" class="form-label">Adresse</label>
+              <input formControlName="address" type="text" name="address" class="form-control" id="address" required>
+            </div>
+            <div class="form-group">
+              <label for="city" class="form-label">Ville</label>
+              <input formControlName="city" type="text" name="city" class="form-control" id="city" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber" class="form-label">Numéro de téléphone portable</label>
+              <input formControlName="phoneNumber" type="text" name="phoneNumber" class="form-control" id="phoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="idCardNumber" class="form-label">Numéro de carte d'identité</label>
+              <input formControlName="idCardNumber" type="text" name="idCardNumber" class="form-control" id="idCardNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="profilePicture" class="form-label">Photo de profil</label>
+              <input formControlName="profilePicture" type="file"  class="form-control" id="profilePicture"  (change)="uploadfile($event)" required>
+            </div>
+            <div class="form-check">
+              <button style="font-size: 2rem;background-color: #ffdcba;color: black" class="btn btn-primary w-100" type="button" (click)="showSecondPart = true">Suivant</button>
+            </div>
+            </div>
+            <!-- Second Part Form Fields -->
+            <div *ngIf="showSecondPart">
+              <h5>Des informations <strong>sur votre boutique</strong></h5>
+              <br>
+              <div class="form-group">
+                <label for="storeName" class="form-label">Nom de la boutique</label>
+                <input formControlName="storeName" type="text" name="storeName" class="form-control" id="storeName" required>
+              </div>
+              <div class="form-group">
+                <label for="storeAdress" class="form-label">Adresse de la boutique</label>
+                <input formControlName="storeAdress" type="text" name="storeAdress" class="form-control" id="storeAdress" required>
+              </div>
+              <div class="form-group">
+                <label for="storeVille" class="form-label">Ville de la boutique</label>
+                <input formControlName="storeVille" type="text" name="storeVille" class="form-control" id="storeVille" required>
+              </div>
+              <div class="form-group">
+                <label for="storePostal" class="form-label">Code postal de la boutique</label>
+                <input formControlName="storePostal" type="text" name="storePostal" class="form-control" id="storePostal" required>
+              </div>
+              <div class="form-group">
+                <label for="ownerDOB" class="form-label">Date de naissance du propriétaire de la société</label>
+                <input formControlName="ownerDOB" type="date" name="ownerDOB" class="form-control" id="ownerDOB" required>
+              </div>
+              <div class="form-group">
+                <label for="idImage" class="form-label">Image de la carte d'identité ou du passeport</label>
+                <input formControlName="idImage" type="file" name="idImage" class="form-control" id="idImage" (change)="uploadfilePiece($event)" required>
+              </div>
+              <div class="form-group">
+                <label  class="form-label">Avez-vous une matricule fiscale?</label>
+                <div class="form-check">
+                  <input formControlName="matriculeFiscale" type="radio" name="matriculeFiscale" value="true" class="form-check-input" id="matriculeFiscaleOui">
+                  <label class="form-check-label" for="matriculeFiscaleOui">Oui</label>
+                </div>
+                <div class="form-check">
+                  <input formControlName="matriculeFiscale" type="radio" name="matriculeFiscale" value="false" class="form-check-input" id="matriculeFiscaleNon">
+                  <label class="form-check-label" for="matriculeFiscaleNon">Non</label>
+                </div>
+              </div>
+
+              <div *ngIf="form.get('matriculeFiscale').value === 'true'">
+                <div class="form-group">
+                  <label for="matriculeFiscaleValue" class="form-label">Numéro de la matricule fiscale</label>
+                  <input formControlName="matriculeFiscaleValue" type="text" name="matriculeFiscaleValue" class="form-control" id="matriculeFiscaleValue" required>
+                </div>
+              </div>
+
+
+              <div class="form-group form-check">
+                <input formControlName="termsAccepted" type="checkbox" name="termsAccepted" class="form-check-input" id="termsAccepted" required>
+                <label class="form-check-label" for="termsAccepted">Je comprends et j'accepte les termes de Beauty Shop</label>
+              </div>
+            </div>
+
+
+            <!-- Common Submit Button -->
+            <div class="form-check" *ngIf="showSecondPart">
+              <button style="font-size: 2rem;background-color: #ffdcba;color: black" class="btn btn-primary w-100" type="submit">Valider</button>
+              <button style="font-size: 2rem;background-color: #ffdcba;color: black" class="btn btn-primary" type="button" (click)="showSecondPart = false">Retour</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="style/js/jquery-3.3.1.min.js"></script>
+<script src="style/js/popper.min.js"></script>
+<script src="style/js/bootstrap.min.js"></script>
+<script src="style/js/main.js"></script>
+<div *ngIf="isLoading" class="spinner-container">
+  <div class="spinner"></div>
+</div>

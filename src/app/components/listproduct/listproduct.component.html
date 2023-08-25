@@ -1,0 +1,64 @@
+
+<section class="category-section spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 order-2 order-lg-1">
+        <div class="filter-widget">
+          <div class="search-bar mb-3">
+            <div class="search-bar mb-3" *ngIf="!isCatExecuted">
+              <input #searchInput type="text" class="form-control" placeholder="Search for products..." (keyup)="filterProducts(searchInput.value)">
+            </div>
+            <div class="search-bar mb-3" *ngIf="isCatExecuted">
+             <a href="/product"><button style="background-color: #ffdcba;color: black" class="btn btn-primary ">Back to all products</button></a>
+
+            </div>
+          </div>
+          <div class="price-filters">
+            <label for="price-filter" class="mb-2">Filter by Price:</label>
+            <select id="price-filter" [(ngModel)]="selectedSortOption" (ngModelChange)="applySorting()">
+              <option value="latest">latest products</option>
+              <option value="low">Low Price</option>
+              <option value="high">High Price</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+        <div class="row">
+          <div class="col-lg-4 col-sm-6" *ngFor="let product of filteredProducts">
+            <div class="product-item">
+              <div class="pi-pic">
+                <div class="tag-sale">ON SALE</div>
+                <img src="{{product.image}}"  alt="">
+                <div class="pi-links">
+                  <a (click)="addToCart(product.id)"class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                </div>
+              </div>
+              <div class="pi-text">
+                <h6>{{product.price}}$</h6>
+                <a href="productDetails/{{product.id}}">
+                  <p>{{product.name}}</p>
+                </a>
+               <a href="productDetails/{{product.id}}"> <button type="button" class="btn btn-outline-warning" style="border-color: #FFDCBA"><span style="color: black">See More</span></button></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+

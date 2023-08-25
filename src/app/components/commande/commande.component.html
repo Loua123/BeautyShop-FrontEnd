@@ -1,0 +1,90 @@
+<!-- command-list.component.html -->
+<div class="container" *ngIf="Showdetails==false">
+  <br>
+  <br>
+  <!-- Bouton pour afficher la liste des commandes non confirmées -->
+  <div class="d-flex justify-content-center"> <!-- Add this div to center-align the buttons -->
+    <button class="btn btn-outline-info" (click)="showAllCommands()">Toutes les commandes</button>
+    <button class="btn btn-outline-info" (click)="showNonConfirmedCommands()">Commandes non confirmées</button>
+    <button class="btn btn-outline-info" (click)="showConfirmedCommands()">Commandes confirmées</button>
+  </div>
+<br>
+<br>
+  <div class="row">
+    <div class="col-lg-12" *ngIf="listcommande.length==0">
+      <div class="card text-center mb-3">
+        <div class="alert alert-warning" role="alert">
+Pas de commandes disponible        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col-lg-3" *ngFor="let command of listcommande">
+      <div class="card text-center mb-3">
+        <div class="py-5 px-4">
+          <img src="/assets/img/shop.png" alt="" class="img-fluid mb-4" />
+
+          <br>
+          <button class="btn btn-success " (click)="pay(command)">Payer</button>&nbsp;
+          <button class="btn btn-warning " (click)="details(command)">Modifier</button>
+        </div>
+        <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
+          <button class="btn btn-danger rounded-circle" (click)="deleteCommand(command.id)">X</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<section class="h-100 gradient-custom" *ngIf="Showdetails==true">
+
+  <div class="container py-5 h-100">
+
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <button class="btn btn-danger rounded-circle" style="text-align: right" (click)="closedetails()">X</button>
+
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0"> <span style="color: #a8729a;">Votre commande</span></h5>
+
+          </div>
+
+          <div class="card-body p-4">
+            <div class="card shadow-0 border mb-4"*ngFor="let p of listproductOrdes">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src='{{p.image}}'
+                         class="img-fluid" alt="Phone">
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">{{p.name}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">{{p.description}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">{{p.categories}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">${{p.price}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <button class="btn btn-danger rounded-circle" style="text-align: right" (click)="removeproduct(p.id)">X</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer border-0 px-4 py-5"
+               style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2">${{total}}</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

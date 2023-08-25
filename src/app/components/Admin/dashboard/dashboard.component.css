@@ -1,0 +1,40 @@
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+.table-image td,
+.table-image th {
+  vertical-align: middle;
+}
+/* Add this to your styles.css (or your component's CSS file) */
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+nav button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+/* Add CSS to style the close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: red;
+}
+

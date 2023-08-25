@@ -1,0 +1,144 @@
+<header class="header-section" >
+  <div class="header-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 text-center text-lg-left">
+          <!-- logo -->
+          <a href="./index.html" class="site-logo">
+            <img src="../../../assets/img/slogon.png" alt="">
+          </a>
+        </div>
+        <div class="col-xl-6 col-lg-5">
+          <form class="header-search-form">
+            <input type="text" placeholder="Search on Beauty Shop ....">
+            <button><i class="flaticon-search"></i></button>
+          </form>
+        </div>
+        <div class="col-xl-4 col-lg-5">
+          <div class="user-panel">
+            <ng-container *ngIf="loggedIn">
+              <div class="up-item dropdown">
+                <i class="flaticon-profile" (click)="toggleDropdown()"></i>
+                <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
+                  <p class="dropdown-item">{{ userName }}</p>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" (click)="viewProfile()">Profile</a>
+                  <a *ngIf="role=='SELLER'" class="dropdown-item" routerLink="/store" >Ma boutique</a>
+                  <a class="dropdown-item" routerLink="/Commande" >Mes commandes</a>
+                  <a class="dropdown-item" href="#" (click)="logout()">Se deconnecter</a>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!loggedIn">
+              <div class="up-item">
+                <i class="flaticon-profile"></i>
+                <a href="#">Se connecter</a>
+              </div>
+            </ng-container>
+            <div class="up-item">
+              <div class="shopping-card">
+                <i class="flaticon-bag"></i>
+                <span>{{nbproduct}}</span>
+              </div>
+              <a routerLink="/Panier">Shopping Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="main-navbar" style="background-color: #FFDCBA">
+    <div class="container">
+      <ul class="main-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="/product">Explore</a></li>
+        <li><a routerLink="/listmarques">Marques</a>
+          <ul class="sub-menu">
+            <li><a >AVENE</a></li>
+            <li><a >Cerave</a></li>
+            <li><a >Cetaphil</a></li>
+            <li><a >Colab dry shampoo</a></li>
+            <li><a >Laboratoire filorga</a></li>
+            <li><a >Kaïna cosmetics</a></li>
+            <li><a >La roche-posay</a></li>
+            <li><a >URIAGE </a></li>
+            <li><a >Zynia</a></li>
+            <li><a >Alania</a></li>
+            <li><a >Apothica</a></li>
+          </ul>
+        </li>
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'Ongle' }">Ongle</a>
+          <ul class="sub-menu">
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Vernis a ongle' }">Vernis a ongle</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Base et top coat' }">Base et top coat</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Autre produit spécifique ongle' }">Autre produit spécifique ongle</a></li>
+          </ul>
+        </li>
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'LÈVRES' }">LÈVRES</a>
+          <ul class="sub-menu">
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Crayon à lèvres' }">Crayon à lèvres</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Rouge à lèvres' }">Rouge à lèvres</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Rouge à lèvres liquide/ gloss' }">Rouge à lèvres liquide/ gloss</a></li>
+          </ul>
+        </li>
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'Yeux' }">Yeux</a>
+          <ul class="sub-menu">
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Palette yeux' }">Palette yeux</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Mascara' }">Mascara</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Sourcils' }">Sourcils</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Fard à paupières' }">Fard à paupières</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'Teint' }">Teint</a>
+          <ul class="sub-menu">
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Palette teint' }">Palette teint</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Base de teint' }">Base de teint</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Fond de teint' }">Fond de teint</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Fard à joues/ bronzer' }">Fard à joues/ bronzer</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Highlighter / contouring' }">Highlighter / contouring</a></li>
+          </ul>
+        </li>
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'Soins' }">Soins</a>
+          <ul class="sub-menu">
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SOINS CORPS' }">SOINS CORPS</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Déodorant' }">Déodorant</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Savon liquide' }">Savon liquide</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Gel douche' }">Gel douche</a></li>
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SOINS VISAGE' }">SOINS VISAGE</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'soins hydratant' }">soins hydratant</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Masque' }">Masque</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'gommage' }">gommage</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Démaquillant' }">Démaquillant</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'nettoyant' }">nettoyant</a></li>
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SOINS CORPS' }">SOINS CORPS</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Déodorant' }">Déodorant</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Savon liquide' }">Savon liquide</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Gel douche' }">Gel douche</a></li>
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SOIN MAIN' }">SOIN MAIN</a></li>
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SOIN PIED' }">SOIN PIED</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a [routerLink]="['/product']" [queryParams]="{ category: 'Cheveux' }">Cheveux</a>
+          <ul class="sub-menu">
+            <li><a style="color: deeppink" [routerLink]="['/product']" [queryParams]="{ category: 'SHAMPOING' }">SHAMPOING</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'shampoing sec' }">shampoing sec</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Shampoing sans sulfate' }">Shampoing sans sulfate</a></li>
+            <li><a [routerLink]="['/product']" [queryParams]="{ category: 'Shampoing normale' }">Shampoing normale</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">PROMOS<span class="new">New</span></a></li>
+        <li *ngIf="role === 'ADMIN'"><a routerLink="/Admin/DashBoard">Administration</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+

@@ -1,0 +1,24 @@
+<ng-container *ngIf="currentUsername == null">
+  <app-header></app-header>
+  <app-forgetpassword *ngIf="location.path() === '/resetpassword'"></app-forgetpassword>
+  <app-login (newUsernameEvent)="addUsername($event)" *ngIf="location.path() !== '/registre' && location.path() !== '/resetpassword'&& location.path() !== '/Submitcoderesetpassword'&& location.path() !== '/registreStore'"></app-login>
+  <app-submitcoderesetpassword *ngIf="location.path() === '/Submitcoderesetpassword'"></app-submitcoderesetpassword>
+  <app-register *ngIf="location.path() === '/registre'"></app-register>
+  <app-register-store *ngIf="location.path() === '/registreStore'"></app-register-store>
+  <app-footer></app-footer>
+</ng-container>
+<ng-container *ngIf="currentUsername && (role == 'CLIENT' || role =='SELLER')">
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</ng-container>
+<ng-container *ngIf="currentUsername && role == 'ADMIN'">
+  <!-- ... Components for logged-in admins ... -->
+<app-header-admin></app-header-admin>  <!-- Child routes for the admin area will be handled in the AdminComponent -->
+  <app-admin-dashboard *ngIf="location.path()==='/DashboardAdmin' ||location.path()===''"></app-admin-dashboard>
+  <app-gestion-users *ngIf="location.path()==='/DashboardAdmin/GestionUsers'"></app-gestion-users>
+  <app-demande-vendeurs *ngIf="location.path()==='/DashboardAdmin/demandeVendeurs'"></app-demande-vendeurs>
+  <app-listproducts *ngIf="location.path()==='/DashboardAdmin/GestionProduits'"></app-listproducts>
+  <app-stat-vente *ngIf="location.path()==='DashboardAdmin/StatVente'"></app-stat-vente>
+  <app-stat-benefice *ngIf="location.path()==='DashboardAdmin/StatBenefice'"></app-stat-benefice>
+</ng-container>

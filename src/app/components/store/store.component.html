@@ -1,0 +1,170 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<div class="container">
+  <div class="view-account">
+    <section class="module">
+
+      <div class="module-inner">
+        <div class="side-bar">
+          <div class="user-info">
+            <img class="img-profile img-circle img-responsive center-block" src="/assets/img/store.png" alt="">
+            <ul class="meta list list-unstyled">
+              <br>
+              <li class="name">
+                <label class="label label-info">{{listofStores[0].name}}</label>
+              </li>
+            </ul>
+          </div>
+          <nav class="side-menu">
+            <ul class="nav">
+              <li><a routerLink="/profile"><span class="fa fa-user"></span> Profile</a></li>
+              <li><a routerLink="/updatestore"><span class="fa fa-cog"></span> Parametres</a></li>
+              <li (click)="showVentes = false" [ngClass]="{'active': !showVentes}">
+                <a><span class="fa fa-product-hunt"></span> Produits</a>
+              </li>
+              <li (click)="showVentes = true" [ngClass]="{'active': showVentes}">
+                <a><span class="fa fa-money"></span> Ventes</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="content-panel">
+
+          <div class="content-header-wrapper">
+            <br>
+            <div class="actions">
+              <button class="btn btn-success" (click)="showForm = !showForm">
+                <i class="fa fa-plus"></i> Ajouter un nouveau produit
+              </button>
+            </div>
+          </div>
+          <div class="drive-wrapper drive-grid-view">
+
+            <div *ngIf="showForm">
+              <!-- Your form code goes here -->
+              <form (submit)="submitForm()" [formGroup]="form">
+                <div class="form-group">
+                  <label for="titre">Titre</label>
+                  <input type="text" class="form-control" id="titre" formControlName="titre">
+                  <div *ngIf="form.controls['titre'].invalid && form.controls['titre'].touched" class="text-danger">
+                    Titre is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Description">Description</label>
+                  <input type="text" class="form-control" id="Description" formControlName="Description">
+                  <div *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched" class="text-danger">
+                    Description is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="categories">Catégorie</label>
+                  <select #cat class="form-control" id="categories" name="categories" formControlName="categories" (change)="loadsouscat(cat.value)">
+                    <option value="ONGLE">ONGLE</option>
+                    <option value="LÈVRES">LÈVRES</option>
+                    <option value="YEUX">YEUX</option>
+                    <option value="TEINT">TEINT</option>
+                    <option value="SOINS">SOINS</option>
+                    <option value="SOINS CORPS">SOINS CORPS</option>
+                    <option value="SOINS VISAGE">SOINS VISAGE</option>
+                    <option value="SOIN MAIN">SOIN MAIN</option>
+                    <option value="SOIN PIED">SOIN PIED</option>
+                    <option value="SHAMPOING">SHAMPOING</option>
+                  </select>
+                  <div *ngIf="form.controls['categories'].invalid && form.controls['categories'].touched" class="text-danger">
+                    Category is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Sous Catégori">Sous Catégorie</label>
+                  <select  class="form-control" id="Sous Catégori" name="Sous Catégori" formControlName="souscat" >
+                    <option *ngFor="let option of optionsList" [value]="option">{{ option }}</option>
+                  </select>
+                  <div *ngIf="form.controls['souscat'].invalid && form.controls['souscat'].touched" class="text-danger">
+                    Subcategory is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="price">Prix</label>
+                  <input type="text" class="form-control" id="price" formControlName="price">
+                  <div *ngIf="form.controls['price'].invalid && form.controls['price'].touched" class="text-danger">
+                    price is required and should be a valid centime value (e.g., 10 or 10.50).
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="profilePicture" class="form-label">Photo du produit</label>
+                  <input type="file" class="form-control" id="profilePicture" formControlName="profilePicture" (change)="uploadfile($event)" required>
+                  <div *ngIf="form.controls['profilePicture'].invalid && form.controls['profilePicture'].touched" class="text-danger">
+                    Profile Picture is required.
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter produit</button>
+              </form>
+            </div>
+          </div>
+          <div class="drive-wrapper drive-grid-view" *ngIf="!showVentes && !showForm">
+            <div class="grid-items-wrapper">
+              <div class="drive-item module text-center" *ngFor="let product of listofProducts" style="width: 250px">
+                <div class="drive-item-inner module-inner">
+                  <div class="drive-item-thumb">
+                    <a href="#"><img [src]="product.image"></a>
+                  </div>
+
+                </div>
+
+                <div class="drive-item-footer module-footer">
+                  <p>{{ product.name }}</p>
+                  <ul class="utilities list-inline button-spacing">
+                    <li><a  href="productDetails/{{product.id}}" data-toggle="tooltip" data-placement="top" title="View" (click)="Viewproduct(product.id)"><i class="fas fa-eye"></i></a></li>
+                    <li><a  data-toggle="tooltip" data-placement="top" title="Update" (click)="Updateproduct(product.id)"><i class="fas fa-pencil-alt"></i></a></li>
+                    <li><a  data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteProduct(product.id)" ><i class="fas fa-trash"></i></a></li>
+                    <li><a  data-toggle="tooltip" data-placement="top" title="Delete" (click)="applypromo(product.id)" ><i class="fas fa-money"></i></a></li>
+                  </ul>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="drive-wrapper drive-list-view" *ngIf="showVentes && !showForm">
+            <div class="table-responsive drive-items-table-wrapper">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th class="type"></th>
+                  <th class="name truncate">Name</th>
+                  <th class="date">Uploaded</th>
+                  <th class="size">Size</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="type"><i class="fa fa-file-text-o text-primary"></i></td>
+                  <td class="name truncate"><a href="#">Meeting Notes.txt</a></td>
+                  <td class="date">Sep 23, 2015</td>
+                  <td class="size">18 KB</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<script>
+  $(function(){
+    $("[data-toggle='tooltip']").tooltip();
+  })
+</script>
+<div *ngIf="isLoading" class="spinner-container">
+  <div class="spinner"></div>
+</div>
