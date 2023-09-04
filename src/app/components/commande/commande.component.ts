@@ -74,7 +74,7 @@ this.listcommande=this.nonConfirmedCommands;
       amount: command.price*100,
       quantity: 1,
       cancelUrl: 'http://localhost:4200/cancel',
-      successUrl: `http://localhost:4200/success?orderId=${command.id}&iduser=${command.user.id}`,
+      successUrl: `http://localhost:4200/success?orderId=${command.id}&iduser=${command.id_seller}`,
     };
     const stripe = await this.stripePromise;
 

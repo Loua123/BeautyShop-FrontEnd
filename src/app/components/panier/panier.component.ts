@@ -129,7 +129,7 @@ export class PanierComponent implements OnInit {
       if (result.isConfirmed) {
         // User clicked "Oui", you can proceed with further actions
         // For example, you can send the order details to the server here
-        this.authservice.addcommande(this.orderDetails, this.user.id).subscribe(
+        this.authservice.addcommande(this.orderDetails, this.user.id,this.listproducttoShop[0].store.user.id).subscribe(
           (result) => {
             // Handle success response here
             Swal.fire('Commande validée!', 'Votre commande a été confirmée avec succès!', 'success')

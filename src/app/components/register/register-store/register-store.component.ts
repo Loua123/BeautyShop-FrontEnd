@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../../_services/auth.service";
 import {createClient, SupabaseClient} from "@supabase/supabase-js";
 import Swal from "sweetalert2";
@@ -57,7 +57,11 @@ export class RegisterStoreComponent implements OnInit {
       matriculeFiscale: [null],
       matriculeFiscaleValue: [''],
       termsAccepted: [false, Validators.requiredTrue]
-    });
+    },
+      {
+        validator: this.passwordMatchValidator // Utilisation de la fonction de validation personnalisée
+      }
+    );
     this.Userregister = new User();
 
   }
@@ -72,10 +76,32 @@ export class RegisterStoreComponent implements OnInit {
   ngOnInit() {
 
   }
+  passwordMatchValidator(control: AbstractControl) {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
 
+    if (password !== confirmPassword) {
+      control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      control.get('confirmPassword')?.setErrors(null);
+    }
+  }
   async submit() {
 
-
+    if (this.form.invalid) {
+      if (this.form.get('email')?.invalid) {
+        Swal.fire('Erreur', 'L\'adresse email est incorrecte', 'error');
+      } else if (this.form.get('password')?.value!=this.form.get('confirmPassword')?.value) {
+        Swal.fire('Erreur', 'Verifier le mot de passe', 'error');
+      } else {
+        Swal.fire('Erreur', 'Veuillez vérifier les champs du formulaire', 'error');
+      }if (this.form.get('idCardNumber')?.invalid) {
+        Swal.fire('Erreur', 'CIN invalide', 'error');
+      }if (this.form.get('phoneNumber')?.invalid) {
+        Swal.fire('Erreur', 'numero de telephone invalide', 'error');
+      }
+      return;
+    }
     this.Userregister.firstname = this.form.get('firstName')?.value;
     this.Userregister.lastname = this.form.get('lastName')?.value;
     this.Userregister.username = this.form.get('email')?.value;
@@ -100,17 +126,14 @@ export class RegisterStoreComponent implements OnInit {
 
       try {
         this.isLoading = true;
-
         // Upload the first image
         const imagePath1 = await this.uploadImage(filePath, this.file);
         // Upload the second image
         const imagePath2 = await this.uploadImage(filePathPiece, this.filePiece);
         this.isLoading = false; // Deactivate the loading state
-
         // Assign the file paths to the Userregister object
         this.Userregister.image = imagePath1;
         this.Userregister.img_de_pieceStore = imagePath2;
-
       } catch (error) {
         console.error('Failed to upload file:', error);
         // Handle the failure case
@@ -122,7 +145,6 @@ export class RegisterStoreComponent implements OnInit {
           // Success case: The registration was successful
           Swal.fire('Succès', 'Félicitations ! Votre inscription a été effectuée avec succès. Vous allez bientôt recevoir un email de confirmation. Vous pouvez dès à présent accéder à notre plateforme. Cependant, veuillez noter que votre demande de création de boutique est en attente de validation par l\'administrateur.', 'success')
             .then(() => {
-
               window.location.href = '/';
             });
         },
@@ -133,9 +155,6 @@ export class RegisterStoreComponent implements OnInit {
         }
       );
     }
-
-
-
   }
 
   uploadfile(event: any) {

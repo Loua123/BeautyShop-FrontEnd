@@ -119,8 +119,8 @@ export class AuthService {
     return this.http.get(`${env.basaeurl}getAllProducts`);
   }
 
-  addcommande(orderDetails: { productId: number; quantity: number }[], userid:any) : Observable<any>{
-    const requestBody = { orderDetails:orderDetails,userid: userid};
+  addcommande(orderDetails: { productId: number; quantity: number }[], userid:any,idseller) : Observable<any>{
+    const requestBody = { orderDetails:orderDetails,userid: userid,idseller:idseller};
     return this.http.post(`${env.basaeurl}addOrder`,requestBody);
   }
   getOrdersbyuser(iduser:any) : Observable<any>
@@ -157,7 +157,15 @@ export class AuthService {
     const requestBody = { idProduct:idProduct,newPrice: newPrice};
     console.log(requestBody);
     return this.http.post(`${env.basaeurl}AddPromotion`,requestBody);
+  }
+  GetallSales() : Observable<any>
+  {
+    return this.http.get(`${env.basaeurl}GetallSales`);
+  }
 
+  getVendeurlist() : Observable<any>
+  {
+    return this.http.get(`${env.basaeurl}getVendeurlist`);
   }
 }
 

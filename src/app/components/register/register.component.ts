@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from 'sweetalert2';
 import {AuthService} from "../../_services/auth.service";
 import {disableDebugTools} from "@angular/platform-browser";
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   Userregister:User;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder,private  authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -38,6 +38,8 @@ export class RegisterComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       idCardNumber: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       profilePicture: ['', Validators.required]
+    }, {
+      validator: this.passwordMatchValidator // Utilisation de la fonction de validation personnalisée
     });
     this.Userregister = new User();
   }
@@ -53,10 +55,31 @@ export class RegisterComponent implements OnInit {
       this.file = event.target.files[0];
     }
   }
+// Fonction de validation personnalisée pour vérifier si les champs password et confirmPassword sont identiques
+  passwordMatchValidator(control: AbstractControl) {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
 
+    if (password !== confirmPassword) {
+      control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      control.get('confirmPassword')?.setErrors(null);
+    }
+  }
   async submit() {
+
     if (this.form.invalid) {
-      Swal.fire('Erreur', 'Veuillez vérifier les champs du formulaire', 'error');
+      if (this.form.get('email')?.invalid) {
+        Swal.fire('Erreur', 'L\'adresse email est incorrecte', 'error');
+      } else if (this.form.get('password')?.value!=this.form.get('confirmPassword')?.value) {
+        Swal.fire('Erreur', 'Verifier le mot de passe', 'error');
+      } else {
+        Swal.fire('Erreur', 'Veuillez vérifier les champs du formulaire', 'error');
+      }if (this.form.get('idCardNumber')?.invalid) {
+        Swal.fire('Erreur', 'CIN invalide', 'error');
+      }if (this.form.get('phoneNumber')?.invalid) {
+        Swal.fire('Erreur', 'numero de telephone invalide', 'error');
+      }
       return;
     }
 

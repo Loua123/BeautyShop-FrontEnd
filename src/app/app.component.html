@@ -5,6 +5,7 @@
   <app-submitcoderesetpassword *ngIf="location.path() === '/Submitcoderesetpassword'"></app-submitcoderesetpassword>
   <app-register *ngIf="location.path() === '/registre'"></app-register>
   <app-register-store *ngIf="location.path() === '/registreStore'"></app-register-store>
+
   <app-footer></app-footer>
 </ng-container>
 <ng-container *ngIf="currentUsername && (role == 'CLIENT' || role =='SELLER')">

@@ -14,6 +14,7 @@ user:any
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUserObject();
+    
     // You can access query parameters returned by Stripe here, if needed
     this.route.queryParams.subscribe((params) => {
       console.log(params)
